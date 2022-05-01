@@ -7,7 +7,7 @@ import java.util.*;
 @Service
 public class LiteracyServiceImpl implements LiteracyService {
 
-    private List<String> results = new ArrayList<>();
+    private final List<String> results = new ArrayList<>();
 
     @Override
     public List<String> countLiteracy(List<String> texts) {
@@ -19,10 +19,6 @@ public class LiteracyServiceImpl implements LiteracyService {
 
     private void countLetters(String text){
         HashMap<Character, Integer> counting = new HashMap<>();
-
-        System.out.println(text.replaceAll("[(?![@',&])\\p{Punct}]", ""));
-        System.out.println(Arrays.toString(text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ")));
-        System.out.println((text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ").length));
 
         for (String word : text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ")) {
             counting.put(word.charAt(0),
