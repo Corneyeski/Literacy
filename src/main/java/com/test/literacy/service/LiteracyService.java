@@ -7,6 +7,6 @@ import java.util.List;
 @Service
 public interface LiteracyService {
 
-    List<Integer> countLiteracy(List<String> texts);
+    List<String> countLiteracy(List<String> texts);
 
 }

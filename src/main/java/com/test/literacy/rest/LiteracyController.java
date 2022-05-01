@@ -22,8 +22,8 @@ public class LiteracyController {
     }
 
     @GetMapping
-    public void literacyCount(@RequestBody List<String> texts){
-        literacyService.countLiteracy(texts);
+    public List<String> literacyCount(@RequestBody List<String> texts){
+        return literacyService.countLiteracy(texts);
     }
 
 

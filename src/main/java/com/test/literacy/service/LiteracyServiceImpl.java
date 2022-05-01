@@ -2,42 +2,36 @@ package com.test.literacy.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class LiteracyServiceImpl implements LiteracyService {
 
+    private List<String> results = new ArrayList<>();
+
     @Override
-    public List<Integer> countLiteracy(List<String> texts) {
-
-        HashMap<Character, Integer> counting = new HashMap<>();
-
-        texts.forEach(System.out::println);
+    public List<String> countLiteracy(List<String> texts) {
 
         texts.forEach(this::countLetters);
-        /*{
-            //String[] s = t.replaceAll("[-+.^:,]", "").split(" ");
 
-           /* for (String word : t.replaceAll("[-+.^:,]", "").split(" ")) {
-                counting.put(word.charAt(0),
-                        counting.get(word.charAt(0)) == null ? 1 : counting.get(word.charAt(0))+1);
-            }
-        });*/
-
-
-        //float percent = (n * 100.0f) / v;
-
-        return null;
+        return results;
     }
 
     private void countLetters(String text){
         HashMap<Character, Integer> counting = new HashMap<>();
 
-        for (String word : text.replaceAll("[-+.^:,]", "").split(" ")) {
+        System.out.println(text.replaceAll("[(?![@',&])\\p{Punct}]", ""));
+        System.out.println(Arrays.toString(text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ")));
+        System.out.println((text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ").length));
+
+        for (String word : text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ")) {
             counting.put(word.charAt(0),
                     counting.get(word.charAt(0)) == null ? 1 : counting.get(word.charAt(0))+1);
         }
+        results.add(
+                Collections.max(counting.values()) * 100 / counting.size() + "%"
+        );
+
 
 
     }
