@@ -9,4 +9,6 @@ public interface LiteracyService {
 
     List<String> countLiteracy(List<String> texts);
 
+    boolean splitWorkers(List<Integer> jobs);
+
 }

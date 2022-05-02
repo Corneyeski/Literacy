@@ -26,5 +26,10 @@ public class LiteracyController {
         return literacyService.countLiteracy(texts);
     }
 
+    @GetMapping("/balancer")
+    public boolean workersBalancer(@RequestBody List<Integer> jobs){
+        return literacyService.splitWorkers(jobs);
+    }
+
 
 }
