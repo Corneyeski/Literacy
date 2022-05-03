@@ -7,14 +7,14 @@ import java.util.*;
 @Service
 public class LiteracyServiceImpl implements LiteracyService {
 
-    // % of literacy in each text
-    private final List<String> results = new ArrayList<>();
-
     @Override
     public List<String> countLiteracy(List<String> texts) {
 
+        // % of literacy in each text
+        List<String> results = new ArrayList<>();
+
         //Send each text to the function countLetters
-        texts.forEach(this::countLetters);
+        texts.forEach(text -> countLetters(results, text));
 
         return results;
     }
@@ -25,10 +25,12 @@ public class LiteracyServiceImpl implements LiteracyService {
         if (jobs.size() < 5)
             return false;
 
-        int firstHalf = (jobs.size() / 2) / 2;
-        int secondHalf = jobs.size() % 2 == 0 ? (jobs.size() / 4) + (jobs.size() / 2) : ((jobs.size() / 4)) + (jobs.size() / 2) - 1;
+        boolean loopBreaker = false;
 
-        for (int job : jobs) {
+        int firstHalf = 1;
+        int secondHalf = 3;
+
+        do {
 
             int result = 0;
             int result2 = 0;
@@ -52,21 +54,20 @@ public class LiteracyServiceImpl implements LiteracyService {
             //Check if workers have a balanced work
             if (result == result2 && result == result3)
                 return true;
+            else if(secondHalf < jobs.size() -2)
+                    secondHalf++;
+            else if(firstHalf < jobs.size() -3) {
+                firstHalf++;
+                secondHalf = firstHalf+2;
+            } else loopBreaker = true;
 
-            //if we get to the first or last index of the jobs list, it's not possible to split jobs equally
-            if(firstHalf > 0)
-                firstHalf--;
-            else return false;
+        }while (!loopBreaker);
 
-            if(secondHalf < jobs.size())
-                secondHalf++;
-            else return false;
-        }
         return false;
     }
 
 
-    private void countLetters(String text) {
+    private List<String> countLetters(List<String> results, String text) {
         HashMap<Character, Integer> counting = new HashMap<>();
 
         for (String word : text.replaceAll("[(?![@',&])\\p{Punct}]", "").split(" ")) {
@@ -76,5 +77,7 @@ public class LiteracyServiceImpl implements LiteracyService {
         results.add(
                 Collections.max(counting.values()) * 100 / counting.size() + "%"
         );
+
+        return results;
     }
 }
