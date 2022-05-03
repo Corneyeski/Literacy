@@ -34,7 +34,7 @@ public class LiteracyControllerTest {
     public void sendTextsAndVerify_OK() throws Exception {
 
         List<String> texts = List.of("Mike made mellow music with his new microphone", "Yarvis yanked his ankle at yoga, and Yolanda yelled out in surprise");
-        List<String> result = List.of("80%", "46%");
+        List<String> result = List.of("80%", "42%");
 
         when(service.countLiteracy(texts)).thenReturn(result);
 
@@ -51,7 +51,7 @@ public class LiteracyControllerTest {
     }
 
     @Test
-    public void sendTextsAndVerify_INVALID() throws Exception {
+    public void sendTextsAndVerify_BAD_REQUEST() throws Exception {
 
         List<String> texts = List.of();
 
