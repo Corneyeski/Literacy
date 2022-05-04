@@ -39,6 +39,9 @@ public class LiteracyIt {
         uri = uri + port;
     }
 
+    /**
+     * I had problems with this test because it wasn't able to transform the response to JSON and I could not spend more time on it
+     */
     /*@Test
     public void literacyTexts_OK(){
 

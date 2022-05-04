@@ -54,6 +54,8 @@ public class LiteracyServiceImpl implements LiteracyService {
             //Check if workers have a balanced work
             if (result == result2 && result == result3)
                 return true;
+
+            //Change split positions to find all the possible combinations
             else if(secondHalf < jobs.size() -2)
                     secondHalf++;
             else if(firstHalf < jobs.size() -3) {

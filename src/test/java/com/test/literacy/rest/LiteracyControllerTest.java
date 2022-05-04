@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
+import static com.test.literacy.utils.Constants.BALANCER_PATH;
 import static com.test.literacy.utils.Constants.LITERACY_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,24 @@ public class LiteracyControllerTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(texts)))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void workersBalancer_OK() throws Exception {
+
+        List<Integer> jobs = List.of(1,3,4,2,2,2,1,1,2);
+
+        when(service.splitWorkers(jobs)).thenReturn(true);
+
+        MvcResult mvcResult = this.mockMvc.perform(get(LITERACY_PATH + BALANCER_PATH)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(jobs)))
+                .andExpect(status().isOk()).andReturn();
+
+
+        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+
+        assertThat(actualResponseBody).isEqualToIgnoringWhitespace("true");
     }
 
 }

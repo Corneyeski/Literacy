@@ -8,7 +8,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -28,6 +28,15 @@ public class LiteracyServiceTest {
         assertEquals("42%", result.get(1));
     }
 
+    @Test
+    public void workersBalancer_isTrue_OK() {
+        List<Integer> jobs = List.of(1,3,4,2,2,2,1,1,2);
+        assertTrue(literacyService.splitWorkers(jobs));
+    }
 
-
+    @Test
+    public void workersBalancer_isFalse_OK() {
+        List<Integer> jobs = List.of(1,1,1,1,1,1);
+        assertFalse(literacyService.splitWorkers(jobs));
+    }
 }
